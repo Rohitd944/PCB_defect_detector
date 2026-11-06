@@ -65,15 +65,15 @@ def generate_analysis(detections, filename):
     f"Average confidence: {average_confidence}%"
 )
     if distribution:
-
         most_common = max(
-        distribution,
-        key=distribution.get
-    )
-
-    observations.append(
-        f"Most common defect: {most_common}"
-    )
+            distribution,
+            key=distribution.get
+        )
+        observations.append(
+            f"Most common defect: {most_common}"
+        )
+    else:
+        observations.append("No defects detected")
     return {
     "inspection_id": inspection_id,
     "timestamp": timestamp,

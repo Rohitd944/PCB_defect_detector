@@ -45,6 +45,58 @@
   color: var(--text-sec);
   line-height: 1.7;
   max-width: 440px;
+  margin-bottom: var(--space-6);
+}
+
+/* ── Mode Switcher ── */
+.hero__mode-switcher {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border-sub);
+  border-radius: var(--radius-lg);
+  padding: 4px;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.hero__mode-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px 18px;
+  font-size: var(--text-sm);
+  font-family: var(--font-ui);
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+
+.hero__mode-btn:hover {
+  color: var(--text-sec);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.hero__mode-btn.active {
+  background: var(--surface-el);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.hero__mode-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 9999px;
+  background: rgba(215, 255, 79, 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(215, 255, 79, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 /* PCB graphic */

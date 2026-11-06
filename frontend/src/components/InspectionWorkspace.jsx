@@ -20,6 +20,7 @@ function InspectionWorkspace() {
   const [showCamera, setShowCamera]   = useState(false);
   const [selectedDet, setSelectedDet] = useState(null);
   const [inputMode, setInputMode]     = useState("upload"); // "upload" | "camera"
+  const [confidence, setConfidence]   = useState(0.25);
 
   const handleFileSelect = (f) => {
     setFile(f);
@@ -58,6 +59,7 @@ function InspectionWorkspace() {
     }
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("confidence", confidence);
 
     setLoading(true);
     setError(null);
@@ -117,6 +119,58 @@ function InspectionWorkspace() {
           onFileChange={handleFileSelect}
           onRemove={handleRemoveFile}
         />
+
+        {/* ── Confidence Filter / Sensitivity ── */}
+        <div className="workspace__sensitivity">
+          <div className="workspace__sensitivity-header">
+            <span className="label-chip">Confidence Filter</span>
+            <span className="workspace__sensitivity-val mono">
+              {Math.round(confidence * 100)}%
+            </span>
+          </div>
+          <div className="workspace__slider-wrap">
+            <input
+              type="range"
+              min="0.10"
+              max="0.70"
+              step="0.05"
+              value={confidence}
+              onChange={(e) => setConfidence(parseFloat(e.target.value))}
+              className="workspace__slider"
+              aria-label="Confidence threshold"
+            />
+          </div>
+          <div className="workspace__presets">
+            <button
+              type="button"
+              className={`ws-preset-btn ${confidence === 0.15 ? "active" : ""}`}
+              onClick={() => setConfidence(0.15)}
+            >
+              Sensitive (15%)
+            </button>
+            <button
+              type="button"
+              className={`ws-preset-btn ${confidence === 0.25 ? "active" : ""}`}
+              onClick={() => setConfidence(0.25)}
+            >
+              Balanced (25%)
+            </button>
+            <button
+              type="button"
+              className={`ws-preset-btn ${confidence === 0.45 ? "active" : ""}`}
+              onClick={() => setConfidence(0.45)}
+            >
+              Strict (45%)
+            </button>
+          </div>
+          <p className="workspace__sensitivity-hint">
+            {confidence >= 0.40
+              ? "Strict (40%+): Only very strong defect signals. Best for grayscale/scanned PCB images."
+              : confidence <= 0.18
+              ? "Sensitive (10-18%): May catch faint defects but also flags normal solder pads as false positives."
+              : "Balanced (20-35%): Recommended — filters out false alarms on normal pads while catching real defects."}
+          </p>
+        </div>
 
         <div className="workspace__actions">
           <button

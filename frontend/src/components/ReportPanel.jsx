@@ -85,12 +85,14 @@ function ReportPanel({ analysis, detections, imageUrl }) {
       autoTable(doc, {
         startY: y,
         head: [["#", "Defect Type", "Confidence", "Bounding Box"]],
-        body: detections.map((d, i) => [
-          i + 1,
-          d.type,
-          `${(d.confidence * 100).toFixed(2)}%`,
-          d.bbox ? `[${d.bbox.join(", ")}]` : "—",
-        ]),
+        body: detections && detections.length > 0
+          ? detections.map((d, i) => [
+              i + 1,
+              d.type,
+              `${(d.confidence * 100).toFixed(2)}%`,
+              d.bbox ? `[${d.bbox.join(", ")}]` : "—",
+            ])
+          : [["—", "No manufacturing defects detected", "—", "—"]],
         theme: "grid",
         headStyles: { fillColor: [23, 28, 28], textColor: 240, halign: "center" },
         bodyStyles: { halign: "center", fontSize: 10 },
