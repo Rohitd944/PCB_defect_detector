@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import InspectionWorkspace from "../components/InspectionWorkspace";
-import CompareWorkspace from "../components/CompareWorkspace";
-import { FiLayers, FiCpu } from "react-icons/fi";
 import api from "../services/api";
 import "./Home.css";
 
 function Home() {
   const [apiStatus, setApiStatus] = useState("checking");
-  const [mode, setMode] = useState("compare"); // "compare" | "yolo"
 
   useEffect(() => {
     api.get("/health")
@@ -24,35 +21,16 @@ function Home() {
         <div className="hero__inner">
           <div className="hero__content">
             <div className="label-chip" style={{ marginBottom: "var(--space-5)" }}>
-              Computer Vision · Template Matching · PCB Quality Control
+              Computer Vision · YOLOv8 · PCB Quality Control
             </div>
             <h1 className="hero__headline">
               Precision PCB<br />
               <span className="hero__headline--accent">Defect Inspection</span>
             </h1>
             <p className="hero__sub">
-              Compare a test board against a known-good reference PCB to pinpoint real defects,
-              or use our trained YOLOv8 model for direct single-image defect classification.
+              Upload a PCB image or capture one with your camera to automatically detect
+              manufacturing defects using our trained YOLOv8 model.
             </p>
-
-            {/* Mode Switcher Tabs */}
-            <div className="hero__mode-switcher">
-              <button
-                className={`hero__mode-btn ${mode === "compare" ? "active" : ""}`}
-                onClick={() => setMode("compare")}
-              >
-                <FiLayers size={16} />
-                <span>Reference Comparison</span>
-                <span className="hero__mode-badge">Recommended</span>
-              </button>
-              <button
-                className={`hero__mode-btn ${mode === "yolo" ? "active" : ""}`}
-                onClick={() => setMode("yolo")}
-              >
-                <FiCpu size={16} />
-                <span>Single Image (YOLOv8)</span>
-              </button>
-            </div>
           </div>
           <div className="hero__visual" aria-hidden="true">
             <PCBHeroGraphic />
@@ -60,7 +38,7 @@ function Home() {
         </div>
       </section>
 
-      {mode === "compare" ? <CompareWorkspace /> : <InspectionWorkspace />}
+      <InspectionWorkspace />
     </div>
   );
 }

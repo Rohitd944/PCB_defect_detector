@@ -1,4 +1,6 @@
-path: C:/PCB DEFECTS DETECTION/dataset
+# Relative path so training runs on macOS / Linux / Windows.
+# Original author path (C:/PCB DEFECTS DETECTION/dataset) was Windows-only.
+path: ./dataset
 
 train: train/images
 val: valid/images

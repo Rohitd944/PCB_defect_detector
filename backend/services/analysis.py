@@ -74,11 +74,16 @@ def generate_analysis(detections, filename):
         )
     else:
         observations.append("No defects detected")
+    is_defective = total_defects > 0
+    verdict = "DEFECTIVE" if is_defective else "DEFECT-FREE (PASSED)"
+
     return {
     "inspection_id": inspection_id,
     "timestamp": timestamp,
     "filename": filename,
     "total_defects": total_defects,
+    "is_defective": is_defective,
+    "verdict": verdict,
     "highest_confidence": highest_confidence,
     "average_confidence": average_confidence,
     "distribution": distribution,

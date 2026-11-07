@@ -44,3 +44,13 @@ backend/results/*
 # Ignore uploaded images
 backend/backend/uploads/*
 !backend/backend/uploads/.gitkeep
+
+# Locally generated training datasets (rebuild with scripts/prepare_*.py)
+dataset_merged/
+dataset_hardneg/
+dataset_hardneg_v2/
+
+# Logs and local checkpoints
+*.log
+runs/
+yolov8n.pt

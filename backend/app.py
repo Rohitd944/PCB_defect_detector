@@ -11,7 +11,6 @@ import traceback
 import uuid
 
 from predictor import predict_image, get_model_info
-from services.compare import compare_pcb_images
 
 app = FastAPI(
     title="AI Powered PCB Defect Detection using YOLOv8",
@@ -37,6 +36,10 @@ RESULTS_DIR = BASE_DIR / "results"
 
 UPLOADS_DIR = BASE_DIR / "uploads"
 
+# StaticFiles raises at import time if the directory is missing, so create
+# both directories *before* mounting (fresh clones had no results/ folder).
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
 app.mount(
     "/results",
@@ -46,7 +49,6 @@ app.mount(
 
 
 UPLOAD_DIR =  UPLOADS_DIR
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
 @app.post(
@@ -66,8 +68,11 @@ Returns:
 async def predict(
     request: Request,
     file: UploadFile = File(...),
-    confidence: float = Form(0.06),
-    iou: float = Form(0.45)
+    # FIXED: previous default 0.06 flooded every photo with junk boxes
+    # (pcb1.jpg: 80 detections at 0.06 vs 9 at 0.25). 0.25 is measured
+    # as the balanced operating point; see predictor.py.
+    confidence: float = Form(0.25),
+    iou: float = Form(0.40)
 ):
 
     # Check if a file was selected
@@ -122,86 +127,6 @@ async def predict(
         "result_image_url": result_image_url,
         "analysis": analysis,
         "confidence_threshold": conf_val
-    }
-
-
-import cv2
-
-@app.post(
-    "/compare",
-    tags=["Comparison"],
-    summary="Reference-based PCB Defect Detection",
-    description="""
-Upload a known-good **reference** PCB image and a **test** PCB image.
-The backend aligns the two images and highlights every pixel-level difference as a defect.
-This approach is far more accurate than blind YOLO detection for real-world PCBs.
-
-Returns:
-- Detected defect regions with type, confidence, bounding box
-- URL of annotated result image (defects highlighted on test PCB)
-- URL of diff heat-map image (shows where differences were found)
-"""
-)
-async def compare(
-    request: Request,
-    reference: UploadFile = File(..., description="Known-good reference PCB image"),
-    test: UploadFile = File(..., description="PCB image to inspect for defects"),
-    diff_threshold: int = Form(30, description="Pixel brightness difference threshold (0-255)"),
-):
-    allowed = {".jpg", ".jpeg", ".png"}
-
-    ref_ext = os.path.splitext(reference.filename)[1].lower()
-    tst_ext = os.path.splitext(test.filename)[1].lower()
-
-    if ref_ext not in allowed or tst_ext not in allowed:
-        raise HTTPException(status_code=400, detail="Only JPG, JPEG, PNG images are allowed.")
-
-    uid = uuid.uuid4().hex[:8]
-
-    ref_path = UPLOAD_DIR / f"{uid}_ref{ref_ext}"
-    tst_path = UPLOAD_DIR / f"{uid}_test{tst_ext}"
-
-    with open(ref_path, "wb") as f:
-        shutil.copyfileobj(reference.file, f)
-    with open(tst_path, "wb") as f:
-        shutil.copyfileobj(test.file, f)
-
-    try:
-        cmp = compare_pcb_images(
-            reference_path=str(ref_path),
-            test_path=str(tst_path),
-            diff_threshold=max(10, min(100, diff_threshold)),
-        )
-    except Exception as e:
-        traceback.print_exc()
-        raise HTTPException(status_code=500, detail=f"Comparison failed: {str(e)}")
-
-    # Save annotated image
-    annotated_name = f"{uid}_annotated_result.jpg"
-    annotated_path = RESULTS_DIR / annotated_name
-    cv2.imwrite(str(annotated_path), cmp["annotated_image"])
-
-    # Save diff heat-map
-    diff_name = f"{uid}_diff_heatmap.jpg"
-    diff_path = RESULTS_DIR / diff_name
-    cv2.imwrite(str(diff_path), cmp["diff_image"])
-
-    detections = cmp["detections"]
-
-    analysis = generate_analysis(detections, test.filename)
-
-    return {
-        "status":             "success",
-        "mode":               "reference_comparison",
-        "filename":           test.filename,
-        "reference_filename": reference.filename,
-        "aligned":            cmp["aligned"],
-        "total_detections":   len(detections),
-        "detections":         detections,
-        "result_image_url":   f"{request.base_url}results/{annotated_name}",
-        "diff_image_url":     f"{request.base_url}results/{diff_name}",
-        "analysis":           analysis,
-        "diff_threshold":     diff_threshold,
     }
 
 
