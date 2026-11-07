@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { FiCpu, FiLayers } from "react-icons/fi";
 import Header from "../components/Header";
 import InspectionWorkspace from "../components/InspectionWorkspace";
+import HybridWorkspace from "../components/HybridWorkspace";
 import api from "../services/api";
 import "./Home.css";
 
 function Home() {
   const [apiStatus, setApiStatus] = useState("checking");
+  const [mode, setMode] = useState("single");
 
   useEffect(() => {
     api.get("/health")
@@ -28,9 +31,35 @@ function Home() {
               <span className="hero__headline--accent">Defect Inspection</span>
             </h1>
             <p className="hero__sub">
-              Upload a PCB image or capture one with your camera to automatically detect
-              manufacturing defects using our trained YOLOv8 model.
+              {mode === "single"
+                ? "Upload a PCB image or capture one with your camera to automatically detect manufacturing defects using our trained YOLOv8 model."
+                : "Upload a known-good reference board and a testing board. YOLOv8 finds defects, then reference alignment verifies whether the board actually changed."}
             </p>
+
+            <div className="hero__mode-switcher" role="tablist" aria-label="Inspection mode">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={mode === "single"}
+                className={`hero__mode-btn ${mode === "single" ? "active" : ""}`}
+                onClick={() => setMode("single")}
+              >
+                <FiCpu size={15} />
+                Single Image
+                <span className="hero__mode-badge">YOLO</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={mode === "hybrid"}
+                className={`hero__mode-btn ${mode === "hybrid" ? "active" : ""}`}
+                onClick={() => setMode("hybrid")}
+              >
+                <FiLayers size={15} />
+                Reference Compare
+                <span className="hero__mode-badge">Hybrid</span>
+              </button>
+            </div>
           </div>
           <div className="hero__visual" aria-hidden="true">
             <PCBHeroGraphic />
@@ -38,7 +67,7 @@ function Home() {
         </div>
       </section>
 
-      <InspectionWorkspace />
+      {mode === "single" ? <InspectionWorkspace /> : <HybridWorkspace />}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import Webcam from "react-webcam";
 import { FiCamera, FiX, FiRefreshCw } from "react-icons/fi";
 import "./WebcamCapture.css";
 
-function WebcamCapture({ onCapture, onClose }) {
+function WebcamCapture({ onCapture, onClose, title = "Camera Input" }) {
   const webcamRef = useRef(null);
   const [ready, setReady] = useState(false);
   const [captured, setCaptured] = useState(null);
@@ -41,7 +41,7 @@ function WebcamCapture({ onCapture, onClose }) {
           <div className="webcam-header__left">
             <span className="label-chip">
               <FiCamera size={11} />
-              Camera Input
+              {title}
             </span>
           </div>
           <button className="webcam-close" onClick={onClose} aria-label="Close camera">

@@ -36,6 +36,8 @@ AI/
 # Generated files
 backend/uploads/*
 backend/results/*
+backend/references/*
+!backend/references/.gitkeep
 
 # Keep the folders
 !backend/uploads/.gitkeep

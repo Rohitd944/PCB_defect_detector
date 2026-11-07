@@ -57,6 +57,7 @@
   padding: 4px;
   gap: 4px;
   flex-wrap: wrap;
+  margin-top: var(--space-2);
 }
 
 .hero__mode-btn {
