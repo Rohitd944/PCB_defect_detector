@@ -1,4 +1,3 @@
-import { FiActivity } from "react-icons/fi";
 import "./Footer.css";
 
 function Footer() {
@@ -6,8 +5,8 @@ function Footer() {
     <footer className="cs-footer">
       <div className="cs-footer__inner">
         <div className="cs-footer__brand">
-          <FiActivity size={14} />
-          <span>CircuitSentinel</span>
+          <span className="cs-footer__dot" />
+          <span>PCB_DEFECT_DETECTION</span>
         </div>
         <p className="cs-footer__stack mono">
           YOLOv8 · React · FastAPI · OpenCV

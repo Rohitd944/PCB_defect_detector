@@ -22,7 +22,7 @@ MIN_AREA_RATIO = 0.00002  # ~52 px on a 2000x1300 frame
 MAX_REGION_AREA_RATIO = 0.20  # >20% of the board = global misalignment, not a defect
 MIN_ANOMALY_SEVERITY = 12.0
 
-# Colour palette (BGR) matching the rest of CircuitSentinel.
+# Colour palette (BGR) matching the rest of project.
 _ACCENT = (79, 255, 215)
 _DANGER = (92, 98, 255)
 _WARNING = (90, 184, 231)

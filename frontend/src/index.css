@@ -1,41 +1,43 @@
 /* ============================================================
-   CIRCUITSENTINEL — DESIGN SYSTEM
+   PCB DEFECT DETECTION — DESIGN SYSTEM
+   Reference-matched: dark teal + emerald + neon green
    ============================================================ */
 
 :root {
-  /* Background layers */
-  --bg-primary:    #080A0A;
-  --bg-secondary:  #0D1010;
-  --surface:       #121616;
-  --surface-el:    #171C1C;
-  --surface-high:  #1E2424;
+  /* Background layers — dark teal */
+  --bg-primary:    #0C191D;
+  --bg-secondary:  #0E2026;
+  --surface:       #12242A;
+  --surface-el:    #16292F;
+  --surface-high:  #1C343B;
 
   /* Borders */
-  --border-sub:    rgba(255, 255, 255, 0.07);
-  --border-med:    rgba(255, 255, 255, 0.13);
-  --border-hi:     rgba(255, 255, 255, 0.22);
+  --border-sub:    rgba(46, 238, 146, 0.08);
+  --border-med:    rgba(46, 238, 146, 0.16);
+  --border-hi:     rgba(46, 238, 146, 0.30);
 
   /* Text */
-  --text-primary:  #F2F3EF;
-  --text-sec:      #A7ADA8;
-  --text-muted:    #6F7772;
-  --text-faint:    #3D4442;
+  --text-primary:  #EEEFF0;
+  --text-sec:      #C4CCCE;
+  --text-muted:    #98A1A3;
+  --text-faint:    #6B7B80;
 
-  /* Accent — use sparingly */
-  --accent:        #D7FF4F;
-  --accent-dim:    rgba(215, 255, 79, 0.12);
-  --accent-hover:  #E8FF80;
+  /* Accent — emerald / neon green */
+  --accent:        #2EEE92;
+  --accent-dim:    rgba(46, 238, 146, 0.12);
+  --accent-hover:  #55EE9E;
+  --accent-glow:   0 0 20px rgba(46, 238, 146, 0.35);
 
   /* Semantic status */
-  --success:       #65D391;
-  --success-dim:   rgba(101, 211, 145, 0.12);
-  --warning:       #E7B85A;
-  --warning-dim:   rgba(231, 184, 90, 0.12);
-  --danger:        #FF625C;
-  --danger-dim:    rgba(255, 98, 92, 0.12);
+  --success:       #2EEE92;
+  --success-dim:   rgba(46, 238, 146, 0.12);
+  --warning:       #F5B544;
+  --warning-dim:   rgba(245, 181, 68, 0.12);
+  --danger:        #FA1F21;
+  --danger-dim:    rgba(250, 31, 33, 0.12);
 
   /* Typography */
-  --font-ui:       'Inter', -apple-system, sans-serif;
+  --font-ui:       'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono:     'IBM Plex Mono', 'Courier New', monospace;
 
   /* Type scale */
@@ -64,9 +66,10 @@
   --space-24: 96px;
 
   /* Radii */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 
   /* Transitions */
   --t-fast:   150ms ease;
@@ -118,8 +121,8 @@ body {
    ============================================================ */
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -127,12 +130,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-hi);
-  border-radius: 3px;
+  background: rgba(46, 238, 146, 0.25);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: rgba(46, 238, 146, 0.45);
 }
 
 /* ============================================================
@@ -176,7 +179,7 @@ body {
   color: var(--text-muted);
   padding: var(--space-1) var(--space-3);
   border: 1px solid var(--border-sub);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
 }
 
@@ -227,7 +230,7 @@ body {
 }
 
 /* ============================================================
-   TOASTIFY OVERRIDE — dark theme
+   TOASTIFY OVERRIDE — dark teal theme
    ============================================================ */
 
 .Toastify__toast {

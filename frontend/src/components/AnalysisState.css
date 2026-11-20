@@ -9,7 +9,7 @@
   position: relative;
   border: 1px solid var(--border-sub);
   border-radius: var(--radius-lg);
-  background: #050707;
+  background: #0A1519;
   overflow: hidden;
   min-height: 280px;
   display: flex;
@@ -32,7 +32,7 @@
   right: 0;
   height: 2px;
   background: linear-gradient(90deg, transparent 0%, var(--accent) 40%, var(--accent) 60%, transparent 100%);
-  box-shadow: 0 0 12px var(--accent), 0 0 24px rgba(215,255,79,0.3);
+  box-shadow: 0 0 12px var(--accent), 0 0 24px rgba(46,238,146,0.3);
   animation: scan-line 2s linear infinite;
   pointer-events: none;
 }
@@ -51,7 +51,7 @@
   font-size: var(--text-xs);
   color: var(--accent);
   letter-spacing: 0.1em;
-  text-shadow: 0 0 8px rgba(215,255,79,0.6);
+  text-shadow: 0 0 8px rgba(46,238,146,0.6);
   animation: pulse-dot 1.2s ease infinite;
 }
 
@@ -88,7 +88,7 @@
 }
 
 .analysis-stage--active {
-  border-color: rgba(215,255,79,0.25);
+  border-color: rgba(46,238,146,0.25);
   background: var(--accent-dim);
 }
 

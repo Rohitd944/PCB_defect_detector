@@ -131,9 +131,9 @@ function ReportPanel({ analysis, detections, imageUrl }) {
       checkBreak(30);
       doc.setDrawColor(180); doc.line(20, y, 190, y); y += 10;
       doc.setFont("helvetica", "normal"); doc.setFontSize(10);
-      doc.text("AI Powered PCB Defect Detection System — CircuitSentinel", 20, y); y += 6;
+      doc.text("AI Powered PCB Defect Detection System — project", 20, y); y += 6;
       doc.text(`Report ID: ${analysis.inspection_id}`, 20, y); y += 6;
-      doc.text("© 2026 CircuitSentinel", 20, y);
+      doc.text("© 2026 project", 20, y);
 
       doc.save(`PCB_Report_${analysis.inspection_id}.pdf`);
       setState("done");

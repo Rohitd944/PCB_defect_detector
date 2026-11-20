@@ -1,5 +1,5 @@
 """
-Prepare merged fine-tune dataset for CircuitSentinel (M1).
+Prepare merged fine-tune dataset for project (M1).
 
 Sources (verified, NOT DeepPCB duplicates):
   1. RobotHuman/PCB_defect (Huang 2019, akhatova) — 693 JPG + 693 XML,

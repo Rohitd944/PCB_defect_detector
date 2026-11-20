@@ -1,7 +1,7 @@
 import "./DetectionList.css";
 
 const COLORS = [
-  "#D7FF4F", "#65D391", "#E7B85A", "#FF625C",
+  "#2EEE92", "#55EE9E", "#F5B544", "#FA1F21",
   "#7DD3FC", "#C4B5FD", "#FCA5A5", "#86EFAC",
 ];
 

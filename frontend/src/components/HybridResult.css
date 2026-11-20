@@ -183,7 +183,7 @@
   width: 100%;
   padding: 0;
   border: none;
-  background: #050707;
+  background: #0A1519;
   cursor: zoom-in;
 }
 
@@ -292,7 +292,7 @@
 .hresult__pill--confirm {
   color: var(--danger);
   background: var(--danger-dim);
-  border: 1px solid rgba(255, 98, 92, 0.3);
+  border: 1px solid rgba(250, 31, 33, 0.3);
 }
 
 .hresult__pill--reject {
@@ -304,7 +304,7 @@
 .hresult__pill--warn {
   color: var(--warning);
   background: var(--warning-dim);
-  border: 1px solid rgba(231, 184, 90, 0.3);
+  border: 1px solid rgba(245, 181, 68, 0.3);
 }
 
 .hresult__pill--muted {
@@ -388,7 +388,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-6);
-  background: rgba(4, 6, 6, 0.92);
+  background: rgba(8, 18, 21, 0.92);
   backdrop-filter: blur(4px);
   cursor: zoom-out;
 }

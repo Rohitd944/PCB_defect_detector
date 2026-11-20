@@ -3,7 +3,7 @@ import { FiZoomIn, FiZoomOut, FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import "./PCBViewer.css";
 
 const DEFECT_COLORS = [
-  "#D7FF4F", "#65D391", "#E7B85A", "#FF625C",
+  "#2EEE92", "#55EE9E", "#F5B544", "#FA1F21",
   "#7DD3FC", "#C4B5FD", "#FCA5A5", "#86EFAC",
 ];
 
@@ -178,9 +178,9 @@ function PCBGridSVG() {
       <line x1="60" y1="10" x2="60"  y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="1"/>
       <line x1="85" y1="10" x2="85"  y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="1"/>
       <line x1="110" y1="10" x2="110" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="1"/>
-      <rect x="25" y="20" width="20" height="12" rx="1" fill="none" stroke="rgba(101,211,145,0.3)" strokeWidth="1"/>
-      <rect x="55" y="38" width="28" height="16" rx="1" fill="none" stroke="rgba(101,211,145,0.3)" strokeWidth="1"/>
-      <line x1="35" y1="26" x2="55" y2="46" stroke="rgba(215,255,79,0.2)" strokeWidth="1"/>
+      <rect x="25" y="20" width="20" height="12" rx="1" fill="none" stroke="rgba(46,238,146,0.3)" strokeWidth="1"/>
+      <rect x="55" y="38" width="28" height="16" rx="1" fill="none" stroke="rgba(46,238,146,0.3)" strokeWidth="1"/>
+      <line x1="35" y1="26" x2="55" y2="46" stroke="rgba(46,238,146,0.2)" strokeWidth="1"/>
       <circle cx="10"  cy="10" r="2.5" fill="rgba(255,255,255,0.12)"/>
       <circle cx="110" cy="10" r="2.5" fill="rgba(255,255,255,0.12)"/>
       <circle cx="10"  cy="70" r="2.5" fill="rgba(255,255,255,0.12)"/>

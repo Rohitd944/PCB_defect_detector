@@ -27,7 +27,7 @@
   flex-shrink: 0;
   border-radius: var(--radius-md);
   background: var(--accent-dim);
-  border: 1px solid rgba(215, 255, 79, 0.3);
+  border: 1px solid rgba(46, 238, 146, 0.3);
   color: var(--accent);
 }
 
@@ -196,7 +196,7 @@
   padding: var(--space-10) var(--space-6);
   text-align: center;
   background: var(--danger-dim);
-  border: 1px solid rgba(255, 98, 92, 0.3);
+  border: 1px solid rgba(250, 31, 33, 0.3);
   border-radius: var(--radius-lg);
 }
 

@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import { FiUploadCloud, FiX, FiImage } from "react-icons/fi";
+import { FiUploadCloud, FiCamera, FiX, FiImage } from "react-icons/fi";
 import "./UploadZone.css";
 
-function UploadZone({ file, onFileChange, onRemove }) {
+function UploadZone({ file, onFileChange, onRemove, onOpenCamera }) {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef(null);
 
@@ -18,15 +18,27 @@ function UploadZone({ file, onFileChange, onRemove }) {
     if (selected) onFileChange(selected);
   };
 
+  const openPicker = (e) => {
+    e?.stopPropagation();
+    inputRef.current?.click();
+  };
+
+  const openCamera = (e) => {
+    e.stopPropagation();
+    onOpenCamera?.();
+  };
+
   if (file) {
     return (
       <div className="upload-zone upload-zone--selected animate-fade-in">
         <div className="upload-zone__file">
-          <FiImage size={20} className="upload-zone__file-icon" />
+          <div className="upload-zone__file-thumb">
+            <FiImage size={22} />
+          </div>
           <div className="upload-zone__file-info">
             <span className="upload-zone__file-name">{file.name}</span>
-            <span className="upload-zone__file-size mono">
-              {(file.size / 1024).toFixed(1)} KB
+            <span className="upload-zone__file-size">
+              {(file.size / 1024).toFixed(1)} KB · Ready for inspection
             </span>
           </div>
           <button
@@ -34,9 +46,17 @@ function UploadZone({ file, onFileChange, onRemove }) {
             onClick={onRemove}
             aria-label="Remove file"
           >
-            <FiX size={16} />
+            <FiX size={18} />
           </button>
         </div>
+        <input
+          ref={inputRef}
+          type="file"
+          accept=".jpg,.jpeg,.png"
+          onChange={handleChange}
+          style={{ display: "none" }}
+          aria-hidden="true"
+        />
       </div>
     );
   }
@@ -47,28 +67,41 @@ function UploadZone({ file, onFileChange, onRemove }) {
       onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
       onDragLeave={() => setDragging(false)}
       onDrop={handleDrop}
-      onClick={() => inputRef.current?.click()}
+      onClick={openPicker}
       role="button"
       tabIndex={0}
       aria-label="Upload PCB image"
-      onKeyDown={(e) => e.key === "Enter" && inputRef.current?.click()}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openPicker();
+        }
+      }}
     >
+      <div className="upload-zone__actions">
+        <button type="button" className="upload-zone__action upload-zone__action--upload" onClick={openPicker}>
+          <FiUploadCloud size={16} /> Upload
+        </button>
+        <button type="button" className="upload-zone__action upload-zone__action--camera" onClick={openCamera}>
+          <FiCamera size={16} /> Camera
+        </button>
+      </div>
+
       <div className="upload-zone__content">
         <div className="upload-zone__icon">
-          <FiUploadCloud size={28} />
+          <FiUploadCloud size={38} />
         </div>
         <div className="upload-zone__text">
           <span className="upload-zone__primary">
             {dragging ? "Release to upload" : "Drop PCB image here"}
           </span>
-          <span className="upload-zone__secondary">
-            or click to browse
-          </span>
+          <span className="upload-zone__secondary">or click to browse</span>
         </div>
-        <div className="upload-zone__formats mono">
-          JPG · JPEG · PNG
+        <div className="upload-zone__formats">
+          <span>JPG</span><span>JPEG</span><span>PNG</span>
         </div>
       </div>
+
       <input
         ref={inputRef}
         type="file"

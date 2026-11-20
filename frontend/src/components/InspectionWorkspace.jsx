@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { FiUploadCloud, FiCamera, FiSearch, FiRefreshCw, FiDownload, FiAlertCircle } from "react-icons/fi";
+import { FiSearch, FiRefreshCw, FiDownload, FiAlertCircle, FiShield, FiActivity, FiCheck, FiChevronRight } from "react-icons/fi";
 import api from "../services/api";
 import UploadZone from "./UploadZone";
 import WebcamCapture from "./WebcamCapture";
@@ -96,101 +96,83 @@ function InspectionWorkspace() {
 
       {/* ── Source selector ── */}
       <div className="workspace__source">
-        <div className="workspace__source-header">
-          <span className="label-chip">Source</span>
-          <div className="workspace__source-tabs">
-            <button
-              className={`workspace__source-tab ${inputMode === "upload" ? "active" : ""}`}
-              onClick={() => setInputMode("upload")}
-            >
-              <FiUploadCloud size={14} /> Upload
-            </button>
-            <button
-              className={`workspace__source-tab ${inputMode === "camera" ? "active" : ""}`}
-              onClick={() => { setInputMode("camera"); setShowCamera(true); }}
-            >
-              <FiCamera size={14} /> Camera
-            </button>
-          </div>
-        </div>
-
         <UploadZone
           file={file}
           onFileChange={handleFileSelect}
           onRemove={handleRemoveFile}
+          onOpenCamera={() => setShowCamera(true)}
         />
 
-        {/* ── Confidence Filter / Sensitivity ── */}
-        <div className="workspace__sensitivity">
-          <div className="workspace__sensitivity-header">
-            <span className="label-chip">Confidence Filter</span>
-            <span className="workspace__sensitivity-val mono">
-              {Math.round(confidence * 100)}%
-            </span>
-          </div>
-          <div className="workspace__slider-wrap">
-            <input
-              type="range"
-              min="0.10"
-              max="0.70"
-              step="0.05"
-              value={confidence}
-              onChange={(e) => setConfidence(parseFloat(e.target.value))}
-              className="workspace__slider"
-              aria-label="Confidence threshold"
-            />
-          </div>
-          <div className="workspace__presets">
-            <button
-              type="button"
-              className={`ws-preset-btn ${confidence === 0.15 ? "active" : ""}`}
-              onClick={() => setConfidence(0.15)}
-            >
-              Sensitive (15%)
-            </button>
-            <button
-              type="button"
-              className={`ws-preset-btn ${confidence === 0.25 ? "active" : ""}`}
-              onClick={() => setConfidence(0.25)}
-            >
-              Balanced (25%)
-            </button>
-            <button
-              type="button"
-              className={`ws-preset-btn ${confidence === 0.45 ? "active" : ""}`}
-              onClick={() => setConfidence(0.45)}
-            >
-              Strict (45%)
-            </button>
-          </div>
-          <p className="workspace__sensitivity-hint">
-            {confidence >= 0.40
-              ? "Strict (40%+): Only very strong defect signals. Best for grayscale/scanned PCB images."
-              : confidence <= 0.18
-              ? "Sensitive (10-18%): May catch faint defects but also flags normal solder pads as false positives."
-              : "Balanced (20-35%): Recommended — filters out false alarms on normal pads while catching real defects."}
-          </p>
-        </div>
+        {/* ── Controls row: Confidence filter + Analyze ── */}
+        <div className="workspace__controls">
 
-        <div className="workspace__actions">
-          <button
-            className="ws-btn ws-btn--primary"
-            onClick={handleAnalyze}
-            disabled={!file || loading}
-            aria-label="Analyze PCB"
-          >
-            {loading ? (
-              <><span className="ws-btn__spinner" aria-hidden="true" /> Analyzing...</>
-            ) : (
-              <><FiSearch size={16} /> Analyze PCB</>
+          <div className="workspace__sensitivity">
+            <div className="workspace__sensitivity-header">
+              <span className="workspace__sensitivity-title">
+                <FiShield size={17} /> Confidence Filter
+              </span>
+              <span className="workspace__sensitivity-val">
+                {Math.round(confidence * 100)}%
+              </span>
+            </div>
+            <div className="workspace__slider-wrap">
+              <input
+                type="range"
+                min="0.10"
+                max="0.70"
+                step="0.05"
+                value={confidence}
+                onChange={(e) => setConfidence(parseFloat(e.target.value))}
+                className="workspace__slider"
+                style={{ "--slider-fill": `${((confidence - 0.10) / 0.60) * 100}%` }}
+                aria-label="Confidence threshold"
+              />
+            </div>
+            <div className="workspace__presets">
+              <button
+                type="button"
+                className={`ws-preset-btn ${confidence === 0.15 ? "active" : ""}`}
+                onClick={() => setConfidence(0.15)}
+              >
+                <FiActivity size={14} /> Sensitive (15%)
+              </button>
+              <button
+                type="button"
+                className={`ws-preset-btn ${confidence === 0.25 ? "active" : ""}`}
+                onClick={() => setConfidence(0.25)}
+              >
+                <FiCheck size={14} /> Balanced (25%)
+              </button>
+              <button
+                type="button"
+                className={`ws-preset-btn ${confidence === 0.45 ? "active" : ""}`}
+                onClick={() => setConfidence(0.45)}
+              >
+                <FiShield size={14} /> Strict (45%)
+              </button>
+            </div>
+          </div>
+
+          <div className="workspace__actions">
+            <button
+              className="ws-btn ws-btn--primary"
+              onClick={handleAnalyze}
+              disabled={!file || loading}
+              aria-label="Analyze PCB"
+            >
+              {loading ? (
+                <><span className="ws-btn__spinner" aria-hidden="true" /> Analyzing...</>
+              ) : (
+                <><FiSearch size={18} /> Analyze PCB <FiChevronRight size={18} /></>
+              )}
+            </button>
+
+            {(file || result) && (
+              <button className="ws-btn ws-btn--ghost" onClick={handleReset} aria-label="Reset">
+                <FiRefreshCw size={16} /> Reset
+              </button>
             )}
-          </button>
-
-          {(file || result) && (
-            <button className="ws-btn ws-btn--ghost" onClick={handleReset} aria-label="Reset">
-              <FiRefreshCw size={16} /> Reset
-            </button>
-          )}
+          </div>
         </div>
       </div>
 

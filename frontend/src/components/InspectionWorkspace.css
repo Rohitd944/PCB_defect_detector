@@ -1,70 +1,39 @@
 .workspace {
-  max-width: 1200px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: var(--space-8) var(--space-6) var(--space-16);
+  padding: var(--space-10) var(--space-8) var(--space-20);
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: var(--space-10);
+  flex: 1;
+  width: 100%;
 }
 
 /* ── Source selector ── */
 .workspace__source {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  max-width: 600px;
+  gap: var(--space-5);
+  width: 100%;
 }
 
-.workspace__source-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-}
-
-.workspace__source-tabs {
-  display: flex;
-  background: var(--surface);
-  border: 1px solid var(--border-sub);
-  border-radius: var(--radius-md);
-  padding: 2px;
-  gap: 2px;
-}
-
-.workspace__source-tab {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 6px 14px;
-  font-size: var(--text-sm);
-  font-family: var(--font-ui);
-  font-weight: 500;
-  color: var(--text-muted);
-  background: none;
-  border: none;
-  border-radius: calc(var(--radius-md) - 2px);
-  cursor: pointer;
-  transition: color var(--t-fast), background var(--t-fast);
-}
-
-.workspace__source-tab:hover {
-  color: var(--text-sec);
-}
-
-.workspace__source-tab.active {
-  background: var(--surface-el);
-  color: var(--text-primary);
+/* ── Controls row: Confidence filter + Analyze ── */
+.workspace__controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-6);
+  align-items: end;
 }
 
 /* ── Sensitivity Controls ── */
 .workspace__sensitivity {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  background: var(--surface);
+  gap: var(--space-3);
+  background: rgba(18, 36, 42, 0.7);
   border: 1px solid var(--border-sub);
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
 }
 
 .workspace__sensitivity-header {
@@ -73,40 +42,92 @@
   justify-content: space-between;
 }
 
+.workspace__sensitivity-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.workspace__sensitivity-title svg {
+  color: var(--accent);
+}
+
 .workspace__sensitivity-val {
   font-size: var(--text-sm);
-  color: var(--accent);
-  font-weight: 600;
+  font-weight: 700;
+  color: #062117;
+  background: var(--accent);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  box-shadow: 0 0 14px rgba(46, 238, 146, 0.3);
 }
 
 .workspace__slider-wrap {
   display: flex;
   align-items: center;
-  padding: var(--space-1) 0;
+  padding: var(--space-2) 0;
 }
 
 .workspace__slider {
   width: 100%;
-  accent-color: var(--accent);
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    var(--accent) 0%,
+    var(--accent) var(--slider-fill, 25%),
+    var(--surface-high) var(--slider-fill, 25%),
+    var(--surface-high) 100%
+  );
+  appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
-  height: 6px;
-  background: var(--surface-high);
-  border-radius: 3px;
+  outline: none;
+}
+
+.workspace__slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 12px rgba(46, 238, 146, 0.5);
+  cursor: pointer;
+}
+
+.workspace__slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 12px rgba(46, 238, 146, 0.5);
+  cursor: pointer;
 }
 
 .workspace__presets {
   display: flex;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 .ws-preset-btn {
   flex: 1;
-  padding: 5px 8px;
-  font-size: var(--text-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 10px 12px;
+  font-size: var(--text-sm);
+  font-weight: 600;
   font-family: var(--font-ui);
-  color: var(--text-sec);
-  background: var(--surface-el);
-  border: 1px solid var(--border-sub);
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-med);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--t-fast);
@@ -114,38 +135,35 @@
 
 .ws-preset-btn:hover {
   color: var(--text-primary);
-  border-color: var(--border-med);
+  border-color: rgba(46, 238, 146, 0.5);
+  transform: translateY(-1px);
 }
 
 .ws-preset-btn.active {
-  background: var(--accent-dim);
-  color: var(--accent);
+  background: var(--accent);
+  color: #062117;
   border-color: var(--accent);
-}
-
-.workspace__sensitivity-hint {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  line-height: 1.4;
-  margin: 0;
+  box-shadow: 0 0 18px rgba(46, 238, 146, 0.3);
 }
 
 /* ── Actions ── */
 .workspace__actions {
   display: flex;
-  gap: var(--space-3);
-  align-items: center;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: stretch;
 }
 
 /* ── Shared button styles ── */
 .ws-btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-5);
+  justify-content: center;
+  gap: var(--space-3);
+  padding: 14px 28px;
   font-family: var(--font-ui);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  font-size: var(--text-md);
+  font-weight: 700;
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--t-fast);
@@ -155,12 +173,16 @@
 
 .ws-btn--primary {
   background: var(--accent);
-  color: var(--bg-primary);
-  border: none;
+  color: #062117;
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 24px rgba(46, 238, 146, 0.25);
 }
 
 .ws-btn--primary:hover:not(:disabled) {
   background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  box-shadow: 0 0 32px rgba(46, 238, 146, 0.45);
+  transform: translateY(-2px);
 }
 
 .ws-btn--primary:active:not(:disabled) {
@@ -168,25 +190,28 @@
 }
 
 .ws-btn--primary:disabled {
-  background: var(--surface-high);
-  color: var(--text-faint);
+  background: rgba(46, 238, 146, 0.15);
+  color: rgba(46, 238, 146, 0.4);
+  border-color: rgba(46, 238, 146, 0.2);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
 .ws-btn--ghost {
-  background: none;
+  background: rgba(255, 255, 255, 0.03);
   color: var(--text-sec);
   border: 1px solid var(--border-med);
 }
 
 .ws-btn--ghost:hover {
   color: var(--text-primary);
-  border-color: var(--border-hi);
+  border-color: var(--accent);
+  background: rgba(46, 238, 146, 0.06);
 }
 
 .ws-btn__spinner {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border: 2px solid rgba(0,0,0,0.25);
   border-top-color: currentColor;
   border-radius: 50%;
@@ -198,7 +223,7 @@
 .workspace__main {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-8);
 }
 
 /* ── Error state ── */
@@ -236,8 +261,9 @@
 
 /* ── Inspection ID ── */
 .workspace__insp-id {
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--text-muted);
+  color: var(--accent);
   letter-spacing: 0.06em;
   padding-bottom: var(--space-2);
 }
@@ -245,7 +271,7 @@
 /* ── Viewer row ── */
 .workspace__viewer-row {
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: 1fr 300px;
   gap: var(--space-6);
   align-items: start;
 }
@@ -295,7 +321,6 @@
   .workspace__viewer-row {
     grid-template-columns: 1fr;
   }
-
   .workspace__det-col {
     max-height: none;
   }
@@ -303,36 +328,30 @@
 
 @media (max-width: 768px) {
   .workspace {
-    padding: var(--space-6) var(--space-4) var(--space-12);
-    gap: var(--space-6);
+    padding: var(--space-8) var(--space-4) var(--space-12);
+    gap: var(--space-8);
   }
-
-  .workspace__source {
-    max-width: 100%;
+  .workspace__controls {
+    grid-template-columns: 1fr;
+    align-items: stretch;
   }
-
   .workspace__final-actions {
     flex-direction: column;
   }
-
   .ws-btn {
     justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
-  .workspace__source-header {
+  .workspace__presets {
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
   }
-
   .workspace__actions {
     flex-direction: column;
-    align-items: stretch;
   }
-
   .ws-btn--primary, .ws-btn--ghost {
     justify-content: center;
+    width: 100%;
   }
 }

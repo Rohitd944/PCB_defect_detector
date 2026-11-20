@@ -82,26 +82,26 @@
 
 .webcam-corner--tl {
   top: 20px; left: 20px;
-  border-top: 2px solid rgba(215, 255, 79, 0.7);
-  border-left: 2px solid rgba(215, 255, 79, 0.7);
+  border-top: 2px solid rgba(46, 238, 146, 0.7);
+  border-left: 2px solid rgba(46, 238, 146, 0.7);
 }
 
 .webcam-corner--tr {
   top: 20px; right: 20px;
-  border-top: 2px solid rgba(215, 255, 79, 0.7);
-  border-right: 2px solid rgba(215, 255, 79, 0.7);
+  border-top: 2px solid rgba(46, 238, 146, 0.7);
+  border-right: 2px solid rgba(46, 238, 146, 0.7);
 }
 
 .webcam-corner--bl {
   bottom: 20px; left: 20px;
-  border-bottom: 2px solid rgba(215, 255, 79, 0.7);
-  border-left: 2px solid rgba(215, 255, 79, 0.7);
+  border-bottom: 2px solid rgba(46, 238, 146, 0.7);
+  border-left: 2px solid rgba(46, 238, 146, 0.7);
 }
 
 .webcam-corner--br {
   bottom: 20px; right: 20px;
-  border-bottom: 2px solid rgba(215, 255, 79, 0.7);
-  border-right: 2px solid rgba(215, 255, 79, 0.7);
+  border-bottom: 2px solid rgba(46, 238, 146, 0.7);
+  border-right: 2px solid rgba(46, 238, 146, 0.7);
 }
 
 /* Overlay text */
@@ -117,7 +117,7 @@
 
 .webcam-overlay-text .mono {
   font-size: var(--text-xs);
-  color: rgba(215, 255, 79, 0.8);
+  color: rgba(46, 238, 146, 0.8);
   text-shadow: 0 0 8px rgba(0,0,0,0.8);
   letter-spacing: 0.06em;
 }
