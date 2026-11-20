@@ -1,6 +1,11 @@
 from collections import Counter
 from datetime import datetime
 
+# A single high-confidence defect is enough to reject the board — it should
+# not be hidden behind the "few detections" manual-inspection bucket.
+FAIL_CONFIDENCE_PERCENT = 50.0
+
+
 def generate_analysis(detections, filename):
     inspection_id = "PCB-" + datetime.now().strftime("%Y%m%d-%H%M%S")
 
@@ -25,14 +30,16 @@ def generate_analysis(detections, filename):
     defect_types = [d["type"] for d in detections]
     distribution = dict(Counter(defect_types))
 
+    high_confidence_defect = highest_confidence > FAIL_CONFIDENCE_PERCENT
+
     if total_defects == 0:
         inspection_status = "PASS"
 
-    elif total_defects <= 10:
-        inspection_status = "MANUAL INSPECTION"
+    elif high_confidence_defect or total_defects > 10:
+        inspection_status = "FAIL"
 
     else:
-        inspection_status = "FAIL"
+        inspection_status = "MANUAL INSPECTION"
 
     if inspection_status == "PASS":
 
@@ -41,18 +48,25 @@ def generate_analysis(detections, filename):
         "No manufacturing defects detected."
     )
 
-    elif inspection_status == "MANUAL INSPECTION":
+    elif inspection_status == "FAIL" and high_confidence_defect:
 
         recommendation = (
-        "PCB contains a moderate number of defects. "
-        "Manual inspection is recommended."
+        f"A high-confidence defect ({highest_confidence}%) was detected. "
+        "Reject the PCB and review the manufacturing process."
+    )
+
+    elif inspection_status == "FAIL":
+
+        recommendation = (
+        "PCB contains multiple defects. "
+        "Reject the PCB and review the manufacturing process."
     )
 
     else:
 
         recommendation = (
-        "PCB contains multiple defects. "
-        "Reject the PCB and review the manufacturing process."
+        "PCB contains a moderate number of defects. "
+        "Manual inspection is recommended."
     )
     observations = []
     observations.append(
